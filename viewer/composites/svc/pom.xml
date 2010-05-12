@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+	<!--
+		This is the Service-composite Maven POM. Template version:
+		1.5-SNAPSHOT Generation time : 2010-05-12 09:42:11 CEST
+	-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>se.vgregion.paf-web</groupId>
+		<artifactId>paf-web-viewer</artifactId>
+		<version>1.0-SNAPSHOT</version>
+	</parent>
+	<groupId>se.vgregion.paf-web</groupId>
+	<artifactId>paf-web-viewer-composite-svc</artifactId>
+	<packaging>jar</packaging>
+	<name>${project.artifactId}</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>${project.groupId}</groupId>
+			<artifactId>paf-web-viewer-composite-types</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-core</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+	</dependencies>
+</project>
