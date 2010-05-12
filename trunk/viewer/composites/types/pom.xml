@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!--
+This is the common Types-composite Maven POM.
+
+
+Template version: 1.5-SNAPSHOT
+Generation time : 2010-05-12 09:42:11 CEST
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>se.vgregion.paf-web</groupId>
+    <artifactId>paf-web-viewer</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <groupId>se.vgregion.paf-web</groupId>
+  <artifactId>paf-web-viewer-composite-types</artifactId>
+  <packaging>jar</packaging>
+  <name>${project.artifactId}</name>
+</project>
