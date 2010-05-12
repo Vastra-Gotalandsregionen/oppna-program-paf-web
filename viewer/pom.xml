@@ -21,13 +21,6 @@ Generation time : 2010-05-12 09:42:11 CEST
   <name>${project.artifactId}</name>
 
   <modules>
-    <module>composites/types</module>
-    <module>composites/svc</module>
-    <module>composites/webcomp</module>
-    <module>composites/schema</module>
-    <module>modules/web</module>
     <module>modules/portlet</module>
-    <module>modules/intsvc</module>
-    <module>applications/viewer</module>
   </modules>
 </project>

@@ -10,7 +10,7 @@
   <parent>
     <groupId>se.vgregion.common</groupId>
     <artifactId>profile-open</artifactId>
-    <version>2.4</version>
+    <version>2.5</version>
   </parent>
 
   <groupId>se.vgregion.paf-web</groupId>
@@ -27,7 +27,7 @@
   <!-- Open Source repo -->
   <scm>
     <developerConnection>scm:svn:https://oppna-program-paf-web.googlecode.com/svn/trunk/</developerConnection>
-    <url>http://paf-web.googlecode.com/svn/trunk</url>
+    <url>http://oppna-program-paf-web.googlecode.com/svn/trunk</url>
   </scm>
 
 </project>
