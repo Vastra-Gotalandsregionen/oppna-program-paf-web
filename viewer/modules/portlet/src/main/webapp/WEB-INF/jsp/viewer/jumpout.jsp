@@ -33,19 +33,33 @@
 <head>
     <script type="text/javascript">
         <!--
-        var count = 0;
         function redirecter() {
-            if (count == 0) {
+            var jump = document.getElementById("jump").value;
+            if (jump == "open") {
+                document.getElementById("jump").value = "";
                 window.location = "${jumpout}";
-                count = 1;
+            } else {
+                window.location = document.getElementById("jumpback").value;
             }
         }
         //-->
     </script>
 </head>
 <body onload="redirecter()">
-<div class="module-content">
-    Redirecting...
+
+<portlet:renderURL var="jumpback"/>
+
+<div class="module-content" style="width: 100%">
+    <div style="text-align: center;">
+        <br/>
+        <img alt="Redirecting..." src="${pageContext.request.contextPath}/images/loading_animation.gif"/>
+        <br/><br/>
+        <a href="${jumpout}">Open</a>
+        <a href="${jumpback}">Close</a>
+    </div>
+
+    <input type="hidden" id="jump" name="jump" value="${jump}"/>
+    <input type="hidden" id="jumpback" name="jumpback" value="${jumpback}"/>
 </div>
 </body>
 </html>
