@@ -63,13 +63,14 @@ public class PafWebViewerController {
         return VIEW_JSP;
     }
 
-    @RenderMapping(params="render=jumpout")
+    @RenderMapping(params = "render=jumpout")
     public String jumpout(RenderResponse response, ModelMap model) {
         PatientEvent patient = (PatientEvent) model.get("patient");
 
-        String jumpoutUrl = pafSecurity.getPafUrl()+"?MODE="+pafSecurity.getPafMode()+"&USER=susro3&PID="+patient.getPersonNumber();
+        String jumpoutUrl = pafSecurity.getPafUrl() + "?MODE=" + pafSecurity.getPafMode() + "&USER=susro3&PID=" + patient.getInputText();
         LOGGER.debug(jumpoutUrl);
         model.addAttribute("jumpout", jumpoutUrl);
+        model.addAttribute("jump", "open");
 
         return JUMPOUT_JSP;
     }
@@ -77,8 +78,8 @@ public class PafWebViewerController {
     @EventMapping("{http://vgregion.se/patientcontext/events}pctx.change")
     public void changeListner(EventRequest request, EventResponse response, ModelMap model) {
         Event event = request.getEvent();
-        PatientEvent patient = (PatientEvent)event.getValue();
-        LOGGER.debug("PafWeb personnummer: "+patient.getPersonNumber());
+        PatientEvent patient = (PatientEvent) event.getValue();
+        LOGGER.debug("PafWeb personnummer: " + patient.getInputText());
 
         model.addAttribute("patient", patient);
 

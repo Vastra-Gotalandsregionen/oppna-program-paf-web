@@ -31,5 +31,5 @@
 
 
 <div class="module-content">
-    <h1 style="font-size: 144px; text-align: center;">PafWeb</h1>
+    <h1 style="font-size: 96px; text-align: center;">PafWeb</h1>
 </div>
