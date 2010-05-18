@@ -30,6 +30,7 @@ Generation time : 2010-05-12 09:42:11 CEST
           <wtpContextName>${project.artifactId}</wtpContextName>
         </configuration>
       </plugin>
+      
     </plugins>
   </build>
 
