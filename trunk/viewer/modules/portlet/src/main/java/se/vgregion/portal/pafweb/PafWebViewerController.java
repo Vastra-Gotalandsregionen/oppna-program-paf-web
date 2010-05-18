@@ -29,6 +29,7 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.portlet.bind.annotation.EventMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
 import se.vgregion.portal.patient.event.PatientEvent;
+import se.vgregion.portal.patient.event.PersonNummer;
 
 import javax.portlet.Event;
 import javax.portlet.EventRequest;
@@ -67,7 +68,7 @@ public class PafWebViewerController {
     public String jumpout(RenderResponse response, ModelMap model) {
         PatientEvent patient = (PatientEvent) model.get("patient");
 
-        String jumpoutUrl = pafSecurity.getPafUrl() + "?MODE=" + pafSecurity.getPafMode() + "&USER=susro3&PID=" + patient.getInputText();
+        String jumpoutUrl = pafSecurity.getPafUrl() + "?MODE=" + pafSecurity.getPafMode() + "&USER=susro3&PID=" + patient.getPersonNummer().getShort();
         LOGGER.debug(jumpoutUrl);
         model.addAttribute("jumpout", jumpoutUrl);
         model.addAttribute("jump", "open");
@@ -79,11 +80,12 @@ public class PafWebViewerController {
     public void changeListner(EventRequest request, EventResponse response, ModelMap model) {
         Event event = request.getEvent();
         PatientEvent patient = (PatientEvent) event.getValue();
-        LOGGER.debug("PafWeb personnummer: " + patient.getInputText());
+        LOGGER.debug("Input: " + patient.getInputText());
 
         model.addAttribute("patient", patient);
-
-        response.setRenderParameter("render", "jumpout");
+        if (patient.getPersonNummer() != null && patient.getPersonNummer().getType() != PersonNummer.Type.INVALID) {
+            response.setRenderParameter("render", "jumpout");
+        }
     }
 
 
