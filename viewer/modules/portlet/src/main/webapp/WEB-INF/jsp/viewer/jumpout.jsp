@@ -38,8 +38,8 @@
             if (jump == "open") {
                 document.getElementById("jump").value = "";
                 window.location = "${jumpout}";
-            } else {
-                window.location = document.getElementById("jumpback").value;
+            //} else {
+            //    window.location = document.getElementById("jumpback").value;
             }
         }
         //-->
