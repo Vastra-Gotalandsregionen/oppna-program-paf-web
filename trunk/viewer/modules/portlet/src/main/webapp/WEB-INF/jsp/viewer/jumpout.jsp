@@ -34,12 +34,11 @@
     <script type="text/javascript">
         <!--
         function redirecter() {
-            var jump = document.getElementById("jump").value;
-            if (jump == "open") {
+            if (document.getElementById("jump").value == "open") {
                 document.getElementById("jump").value = "";
                 window.location = "${jumpout}";
-            //} else {
-            //    window.location = document.getElementById("jumpback").value;
+            } else {
+                window.location = document.getElementById("jumpback").value;
             }
         }
         //-->
@@ -51,11 +50,10 @@
 
 <div class="module-content" style="width: 100%">
     <div style="text-align: center;">
-        <br/>
-        <img alt="Redirecting..." src="${pageContext.request.contextPath}/images/loading_animation.gif"/>
+        Om inte PafWeb öppnas automatiskt.
         <br/><br/>
-        <a href="${jumpout}">Open</a>
-        <a href="${jumpback}">Close</a>
+        <a href="${jumpout}">Öppna</a>
+        <a href="${jumpback}">Stäng</a>
     </div>
 
     <input type="hidden" id="jump" name="jump" value="${jump}"/>

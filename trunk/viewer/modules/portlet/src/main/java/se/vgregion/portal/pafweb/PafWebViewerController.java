@@ -31,10 +31,8 @@ import org.springframework.web.portlet.bind.annotation.RenderMapping;
 import se.vgregion.portal.patient.event.PatientEvent;
 import se.vgregion.portal.patient.event.PersonNummer;
 
-import javax.portlet.Event;
-import javax.portlet.EventRequest;
-import javax.portlet.EventResponse;
-import javax.portlet.RenderResponse;
+import javax.portlet.*;
+import java.util.Map;
 
 /**
  * This action do that and that, if it has something special it is.
@@ -65,10 +63,11 @@ public class PafWebViewerController {
     }
 
     @RenderMapping(params = "render=jumpout")
-    public String jumpout(RenderResponse response, ModelMap model) {
+    public String jumpout(RenderRequest request, RenderResponse response, ModelMap model) {
         PatientEvent patient = (PatientEvent) model.get("patient");
+        String uid = lookupUid(request);
 
-        String jumpoutUrl = pafSecurity.getPafUrl() + "?MODE=" + pafSecurity.getPafMode() + "&USER=susro3&PID=" + patient.getPersonNummer().getShort();
+        String jumpoutUrl = pafSecurity.getPafUrl() + "?MODE=" + pafSecurity.getPafMode() + "&USER="+uid+"&PID=" + patient.getPersonNummer().getFull();
         LOGGER.debug(jumpoutUrl);
         model.addAttribute("jumpout", jumpoutUrl);
         model.addAttribute("jump", "open");
@@ -94,4 +93,17 @@ public class PafWebViewerController {
         LOGGER.debug("PafWeb reset");
         model.addAttribute("patient", new PatientEvent());
     }
+
+
+    private String lookupUid(PortletRequest req) {
+        Map<String, ?> userInfo = (Map<String, ?>) req.getAttribute(PortletRequest.USER_INFO);
+        String userId;
+        if (userInfo != null) {
+            userId = (String) userInfo.get(PortletRequest.P3PUserInfos.USER_LOGIN_ID.toString());
+        } else {
+            userId = (String) "";
+        }
+        return userId;
+    }
+
 }
