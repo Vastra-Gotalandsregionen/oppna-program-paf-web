@@ -1,4 +1,4 @@
-#PafWeb client portlet is a simple tool that allows easy access to the PafWeb web-application in a portal environment.
+# PafWeb client portlet is a simple tool that allows easy access to the PafWeb web-application in a portal environment.
 
 = PafWeb client =
 
