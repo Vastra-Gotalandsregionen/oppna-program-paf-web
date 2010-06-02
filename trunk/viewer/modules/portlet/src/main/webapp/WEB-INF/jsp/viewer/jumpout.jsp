@@ -36,7 +36,7 @@
         function redirecter() {
             if (document.getElementById("jump").value == "open") {
                 document.getElementById("jump").value = "";
-                window.location = "${jumpout}";
+                document.forms["paf"].submit();
             } else {
                 window.location = document.getElementById("jumpback").value;
             }
@@ -52,8 +52,14 @@
     <div style="text-align: center;">
         Om inte PafWeb öppnas automatiskt.
         <br/><br/>
-        <a href="${jumpout}">Öppna</a>
-        <a href="${jumpback}">Stäng</a>
+
+        <form id="paf" method="post" action="${url}">
+            <input type="hidden" value="${user}" name="USER" /><br />
+            <input type="hidden" value="${mode}" name="MODE" /><br />
+            <input type="hidden" value="${pid}" name="PID" /><br />
+            <a href="javascript: redirecter()">Öppna</a>
+            <a href="${jumpback}">Stäng</a>
+        </form>
     </div>
 
     <input type="hidden" id="jump" name="jump" value="${jump}"/>
