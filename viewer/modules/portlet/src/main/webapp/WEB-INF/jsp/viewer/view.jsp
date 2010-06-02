@@ -32,10 +32,11 @@
 
 <div class="module-content">
     <div style="text-align: center;">
-        <h1 style="font-size: 96px;">PafWeb</h1>
+        <div style="font-size: 72px; line-height: 84px; font-weight: bold;">Klinisk fysiologi</div>
+        <div style="font-size: 72px; line-height: 84px; font-weight: bold;">SU/Östra</div>
         <c:if test="${patient.inputText != ''}">
             <c:if test="${patient.personNummer == null}">
-                <span class="error">${patient.inputText} är inte ett giltigt personnummer</span>
+                <div class="error">${patient.inputText} är inte ett giltigt personnummer</div>
             </c:if>
         </c:if>
     </div>

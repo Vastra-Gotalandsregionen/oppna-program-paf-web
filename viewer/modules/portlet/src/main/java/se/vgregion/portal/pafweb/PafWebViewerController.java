@@ -70,6 +70,11 @@ public class PafWebViewerController {
         String jumpoutUrl = pafSecurity.getPafUrl() + "?MODE=" + pafSecurity.getPafMode() + "&USER="+uid+"&PID=" + patient.getPersonNummer().getFull();
         LOGGER.debug(jumpoutUrl);
         model.addAttribute("jumpout", jumpoutUrl);
+
+        model.addAttribute("url", pafSecurity.getPafUrl());
+        model.addAttribute("mode", pafSecurity.getPafMode());
+        model.addAttribute("user", uid);
+        model.addAttribute("pid", patient.getPersonNummer().getFull());
         model.addAttribute("jump", "open");
 
         return JUMPOUT_JSP;
