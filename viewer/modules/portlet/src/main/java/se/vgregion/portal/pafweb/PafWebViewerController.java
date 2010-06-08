@@ -21,7 +21,7 @@ package se.vgregion.portal.pafweb;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -49,8 +49,17 @@ public class PafWebViewerController {
     public static final String VIEW_JSP = "view";
     public static final String JUMPOUT_JSP = "jumpout";
 
-    @Autowired
-    private PafSecurity pafSecurity;
+    @Value("${paf.url}")
+    private String pafUrl;
+
+    @Value("${paf.mode}")
+    private String pafMode;
+
+    @Value("${paf.access.security.level}")
+    private String pafAccessSecurityLevel;
+
+    @Value("${paf.access.mode}")
+    private String pafAccessMode;
 
     @RenderMapping
     public String view(ModelMap model) {
@@ -67,14 +76,23 @@ public class PafWebViewerController {
         PatientEvent patient = (PatientEvent) model.get("patient");
         String uid = lookupUid(request);
 
-        String jumpoutUrl = pafSecurity.getPafUrl() + "?MODE=" + pafSecurity.getPafMode() + "&USER="+uid+"&PID=" + patient.getPersonNummer().getFull();
-        LOGGER.debug(jumpoutUrl);
-        model.addAttribute("jumpout", jumpoutUrl);
-
-        model.addAttribute("url", pafSecurity.getPafUrl());
-        model.addAttribute("mode", pafSecurity.getPafMode());
-        model.addAttribute("user", uid);
-        model.addAttribute("pid", patient.getPersonNummer().getFull());
+        if ("post".equals(pafAccessMode)) {
+            model.addAttribute("url", pafUrl);
+            if ("insecure".equals(pafAccessSecurityLevel)) {
+                model.addAttribute("mode", pafMode);
+            }
+            model.addAttribute("user", uid);
+            model.addAttribute("pid", patient.getPersonNummer().getFull());
+        } else { // default get
+            String jumpoutUrl = pafUrl + "?USER="+uid+"&PID=" + patient.getPersonNummer().getFull();
+            if ("insecure".equals(pafAccessSecurityLevel)) {
+                jumpoutUrl += "&MODE="+pafMode;
+            }
+            model.addAttribute("jumpout", jumpoutUrl);
+            LOGGER.debug(jumpoutUrl);
+        }
+        model.addAttribute("accessMode", pafAccessMode);
+        model.addAttribute("level", pafAccessSecurityLevel);
         model.addAttribute("jump", "open");
 
         return JUMPOUT_JSP;

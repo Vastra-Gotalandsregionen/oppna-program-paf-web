@@ -31,11 +31,4 @@
 
   <context:property-placeholder location="classpath:security.properties" ignore-resource-not-found="true"/>
 
-  <bean id="security" class="se.vgregion.portal.pafweb.PafSecurity">
-    <property name="autoRedirect" value="${auto.redirect}" />
-    <property name="redirectMode" value="${redirect.mode}" />
-    <property name="pafUrl" value="${paf.url}" />
-    <property name="pafMode" value="${paf.mode}" />
-  </bean>
-
 </beans>
