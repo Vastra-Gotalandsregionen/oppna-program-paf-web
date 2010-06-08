@@ -34,9 +34,15 @@
     <script type="text/javascript">
         <!--
         function redirecter() {
+            var accessMode = "${accessMode}";
+
             if (document.getElementById("jump").value == "open") {
                 document.getElementById("jump").value = "";
-                document.forms["paf"].submit();
+                if (accessMode == "post") {
+                    document.forms["paf"].submit();
+                } else { // default get
+                    window.location = "${jumpout}";
+                }
             } else {
                 window.location = document.getElementById("jumpback").value;
             }
