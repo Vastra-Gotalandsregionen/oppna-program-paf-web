@@ -50,20 +50,19 @@ public class PafWebViewerController {
     public static final String JUMPOUT_JSP = "jumpout";
 
     @Value("${paf.url}")
-    private String pafUrl;
+    String pafUrl;
 
     @Value("${paf.mode}")
-    private String pafMode;
+    String pafMode;
 
     @Value("${paf.access.security.level}")
-    private String pafAccessSecurityLevel;
+    String pafAccessSecurityLevel;
 
     @Value("${paf.access.mode}")
-    private String pafAccessMode;
+    String pafAccessMode;
 
     @RenderMapping
     public String view(ModelMap model) {
-        LOGGER.debug("view");
         if (!model.containsKey("patient")) {
             model.addAttribute("patient", new PatientEvent());
         }
@@ -72,9 +71,28 @@ public class PafWebViewerController {
     }
 
     @RenderMapping(params = "render=jumpout")
-    public String jumpout(RenderRequest request, RenderResponse response, ModelMap model) {
+    public String jumpout(RenderRequest request, ModelMap model) {
         PatientEvent patient = (PatientEvent) model.get("patient");
         String uid = lookupUid(request);
+        // Validation
+        // 1: user
+        if ("".equals(uid)) {
+            // TODO: send error correctly
+            model.addAttribute("error", "Användaren okänd");
+            return VIEW_JSP;
+        }
+        // 2: Valid patient identifier (PNo, ReservNo, ...)
+        if (null == patient.getPersonNummer()) {
+            // TODO: send error correctly
+            model.addAttribute("error", "Patient okänd");
+            return VIEW_JSP;
+        }
+        // 3: configuration
+        if (null == pafUrl) {
+            // TODO: send error correctly
+            model.addAttribute("error", "Paf konfiguration saknas");
+            return VIEW_JSP;
+        }
 
         if ("post".equals(pafAccessMode)) {
             model.addAttribute("url", pafUrl);
@@ -102,7 +120,6 @@ public class PafWebViewerController {
     public void changeListner(EventRequest request, EventResponse response, ModelMap model) {
         Event event = request.getEvent();
         PatientEvent patient = (PatientEvent) event.getValue();
-        LOGGER.debug("Input: " + patient.getInputText());
 
         model.addAttribute("patient", patient);
         if (patient.getPersonNummer() != null && patient.getPersonNummer().getType() != PersonNummer.Type.INVALID) {
@@ -113,7 +130,6 @@ public class PafWebViewerController {
 
     @EventMapping("{http://vgregion.se/patientcontext/events}pctx.reset")
     public void resetListner(ModelMap model) {
-        LOGGER.debug("PafWeb reset");
         model.addAttribute("patient", new PatientEvent());
     }
 
