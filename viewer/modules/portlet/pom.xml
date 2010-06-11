@@ -105,26 +105,4 @@ Generation time : 2010-05-12 09:42:11 CEST
       <artifactId>servlet-api</artifactId>
     </dependency>
   </dependencies>
-
-  <profiles>
-    <profile>
-      <id>prod</id>
-      <build>
-        <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-war-plugin</artifactId>
-            <configuration>
-              <webResources>
-                <resource>
-                  <directory>src/main/webapp/WEB-INF/prod</directory>
-                  <targetPath>WEB-INF</targetPath>
-                </resource>
-              </webResources>
-            </configuration>
-          </plugin>
-        </plugins>
-      </build>
-    </profile>
-  </profiles>
 </project>
