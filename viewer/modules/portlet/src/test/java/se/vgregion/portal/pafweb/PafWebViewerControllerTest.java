@@ -205,6 +205,18 @@ public class PafWebViewerControllerTest {
     }
 
     @Test
+    public void testChangeListnerNoPatient() throws Exception {
+        PatientEvent pEvent = new PatientEvent();
+        Event mockEvent = new MockEvent("{http://vgregion.se/patientcontext/events}pctx.change", pEvent);
+        EventRequest mockReq = new MockEventRequest(mockEvent);
+        EventResponse mockRes = new MockEventResponse();
+
+        controller.changeListner(mockReq, mockRes, model);
+        assertSame(model.get("patient"), pEvent);
+        assertFalse(mockRes.getRenderParameterMap().containsKey("render"));
+    }
+
+    @Test
     public void testChangeListnerInvalidPatient() throws Exception {
         PatientEvent pEvent = new PatientEvent();
         pEvent.setInputText("19121212-1212a");
