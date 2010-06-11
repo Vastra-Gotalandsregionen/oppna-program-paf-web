@@ -61,6 +61,12 @@ public class PafWebViewerController {
     @Value("${paf.access.mode}")
     String pafAccessMode;
 
+    /**
+     * First splash screen.
+     *
+     * @param model Model map
+     * @return view path
+     */
     @RenderMapping
     public String view(ModelMap model) {
         if (!model.containsKey("patient")) {
@@ -70,6 +76,13 @@ public class PafWebViewerController {
         return VIEW_JSP;
     }
 
+    /**
+     * Jumpout screen for the PafWeb web application.
+     *
+     * @param request to access current user
+     * @param model Model map
+     * @return jumpout screen path
+     */
     @RenderMapping(params = "render=jumpout")
     public String jumpout(RenderRequest request, ModelMap model) {
         PatientEvent patient = (PatientEvent) model.get("patient");
@@ -116,6 +129,13 @@ public class PafWebViewerController {
         return JUMPOUT_JSP;
     }
 
+    /**
+     * Listen for the patient context change event.
+     *
+     * @param request EventRequest event
+     * @param response Event response to redirect flow
+     * @param model Model map to communicate
+     */
     @EventMapping("{http://vgregion.se/patientcontext/events}pctx.change")
     public void changeListner(EventRequest request, EventResponse response, ModelMap model) {
         Event event = request.getEvent();
@@ -127,7 +147,11 @@ public class PafWebViewerController {
         }
     }
 
-
+    /**
+     * Listen for the patient context reset event.
+     *
+     * @param model clean Model map 
+     */
     @EventMapping("{http://vgregion.se/patientcontext/events}pctx.reset")
     public void resetListner(ModelMap model) {
         model.addAttribute("patient", new PatientEvent());
