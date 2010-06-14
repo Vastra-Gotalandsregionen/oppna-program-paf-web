@@ -46,7 +46,13 @@ import java.util.Map;
 public class PafWebViewerController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PafWebViewerController.class);
 
+    /**
+     * jsp name.
+     */
     public static final String VIEW_JSP = "view";
+    /**
+     * jsp name.
+     */
     public static final String JUMPOUT_JSP = "jumpout";
 
     @Value("${paf.url}")
@@ -115,9 +121,9 @@ public class PafWebViewerController {
             model.addAttribute("user", uid);
             model.addAttribute("pid", patient.getPersonNummer().getFull());
         } else { // default get
-            String jumpoutUrl = pafUrl + "?USER="+uid+"&PID=" + patient.getPersonNummer().getFull();
+            String jumpoutUrl = pafUrl + "?USER=" + uid + "&PID=" + patient.getPersonNummer().getFull();
             if ("insecure".equals(pafAccessSecurityLevel)) {
-                jumpoutUrl += "&MODE="+pafMode;
+                jumpoutUrl += "&MODE=" + pafMode;
             }
             model.addAttribute("jumpout", jumpoutUrl);
             LOGGER.debug(jumpoutUrl);
@@ -142,7 +148,8 @@ public class PafWebViewerController {
         PatientEvent patient = (PatientEvent) event.getValue();
 
         model.addAttribute("patient", patient);
-        if (patient.getPersonNummer() != null && patient.getPersonNummer().getType() != PersonNummer.Type.INVALID) {
+        if (patient.getPersonNummer() != null
+                && patient.getPersonNummer().getType() != PersonNummer.Type.INVALID) {
             response.setRenderParameter("render", "jumpout");
         }
     }
@@ -150,7 +157,7 @@ public class PafWebViewerController {
     /**
      * Listen for the patient context reset event.
      *
-     * @param model clean Model map 
+     * @param model clean Model map
      */
     @EventMapping("{http://vgregion.se/patientcontext/events}pctx.reset")
     public void resetListner(ModelMap model) {
