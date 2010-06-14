@@ -70,7 +70,7 @@ public class PafWebViewerController {
     @RenderMapping
     public String view(ModelMap model) {
         if (!model.containsKey("patient")) {
-            model.addAttribute("patient", new PatientEvent());
+            model.addAttribute("patient", new PatientEvent(""));
         }
 
         return VIEW_JSP;
@@ -154,7 +154,7 @@ public class PafWebViewerController {
      */
     @EventMapping("{http://vgregion.se/patientcontext/events}pctx.reset")
     public void resetListner(ModelMap model) {
-        model.addAttribute("patient", new PatientEvent());
+        model.addAttribute("patient", new PatientEvent(""));
     }
 
 
