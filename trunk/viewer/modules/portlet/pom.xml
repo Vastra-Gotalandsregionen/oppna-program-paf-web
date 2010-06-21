@@ -38,7 +38,7 @@ Generation time : 2010-05-12 09:42:11 CEST
     <dependency>
       <groupId>se.vgregion.healthcare-context</groupId>
       <artifactId>healthcare-context-patient-context-composite-webcomp</artifactId>
-      <version>1.0-SNAPSHOT</version>
+      <version>1.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
