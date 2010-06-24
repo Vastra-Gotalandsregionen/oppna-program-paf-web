@@ -11,7 +11,7 @@ Generation time : 2010-05-12 09:42:11 CEST
   <parent>
     <groupId>se.vgregion.paf-web</groupId>
     <artifactId>paf-web-viewer</artifactId>
-    <version>1.1-SNAPSHOT</version>
+    <version>1.1</version>
   </parent>
   <groupId>se.vgregion.paf-web</groupId>
   <artifactId>paf-web-viewer-module-portlet</artifactId>
