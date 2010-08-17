@@ -1,0 +1,20 @@
+paf.url=http://your.host.se/proxy/path/to/paf/default.asp
+
+# form/get
+#paf.access.mode=post
+paf.access.mode=get
+
+# It is not recommended to give the MODE parameter directly,
+# to provide secure access it is recommended to use a redirect proxy
+# that add the MODE parameter.
+# Insecure mode has to be explicitly activated, together with the MODE key.
+paf.access.security.level=secure
+paf.mode=
+#paf.access.security.level=insecure
+#paf.mode=123456789
+
+# Ldap properties
+BIND_DN=
+BIND_URL=
+BIND_PW=
+BASE=

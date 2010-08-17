@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+This is the Business Component Maven POM.
+
+
+Template version: 1.5-SNAPSHOT
+Generation time : 2010-05-12 09:42:11 CEST
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>se.vgregion.paf-web</groupId>
+    <artifactId>paf-web-system</artifactId>
+    <version>1.2</version>
+  </parent>
+  <groupId>se.vgregion.paf-web</groupId>
+  <artifactId>paf-web-viewer</artifactId>
+  <packaging>pom</packaging>
+  <version>1.2</version>
+  <name>${project.artifactId}</name>
+
+  <modules>
+    <module>modules/portlet</module>
+  </modules>
+</project>
