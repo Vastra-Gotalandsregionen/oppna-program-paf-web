@@ -11,7 +11,7 @@ Generation time : 2010-05-12 09:42:11 CEST
   <parent>
     <groupId>se.vgregion.paf-web</groupId>
     <artifactId>paf-web-viewer</artifactId>
-    <version>1.2-SNAPSHOT</version>
+    <version>1.2</version>
   </parent>
   <groupId>se.vgregion.paf-web</groupId>
   <artifactId>paf-web-viewer-module-portlet</artifactId>
@@ -22,12 +22,12 @@ Generation time : 2010-05-12 09:42:11 CEST
     <dependency>
       <groupId>se.vgregion.healthcare-context</groupId>
       <artifactId>healthcare-context-patient-context-composite-svc</artifactId>
-      <version>1.4-SNAPSHOT</version>
+      <version>1.5</version>
     </dependency>
     <dependency>
       <groupId>se.vgregion.healthcare-context</groupId>
       <artifactId>healthcare-context-patient-context-composite-webcomp</artifactId>
-      <version>1.4-SNAPSHOT</version>
+      <version>1.5</version>
       <scope>provided</scope>
     </dependency>
     
