@@ -19,35 +19,59 @@
 
 package se.vgregion.portal.pafweb;
 
+import static javax.portlet.PortletRequest.P3PUserInfos.*;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.*;
+import static org.mockito.Mockito.*;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.portlet.Event;
+import javax.portlet.EventRequest;
+import javax.portlet.EventResponse;
+import javax.portlet.PortletRequest;
+import javax.portlet.RenderRequest;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.springframework.mock.web.portlet.MockEvent;
 import org.springframework.mock.web.portlet.MockEventRequest;
 import org.springframework.mock.web.portlet.MockEventResponse;
 import org.springframework.mock.web.portlet.MockRenderRequest;
+import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.ui.ModelMap;
+
+import se.vgregion.portal.auditlog.AuditLogInfoContainer;
+import se.vgregion.portal.auditlog.AuditLogInfoContainerFactory;
+import se.vgregion.portal.auditlog.PatientAccessAuditLogger;
 import se.vgregion.portal.patient.event.PatientEvent;
-
-import javax.portlet.*;
-import java.util.HashMap;
-import java.util.Map;
-
-import static javax.portlet.PortletRequest.P3PUserInfos.USER_LOGIN_ID;
-import static org.junit.Assert.*;
 
 /**
  * This action do that and that, if it has something special it is.
- *
+ * 
  * @author <a href="mailto:david.rosell@redpill-linpro.com">David Rosell</a>
  */
 public class PafWebViewerControllerTest {
     private PafWebViewerController controller;
     private ModelMap model;
 
+    @Mock
+    PatientAccessAuditLogger auditLoggerMock;
+
+    @Mock
+    AuditLogInfoContainerFactory containerFactoryMock;
+
     @Before
     public void setUp() throws Exception {
+        MockitoAnnotations.initMocks(this);
         controller = new PafWebViewerController();
+        ReflectionTestUtils.setField(controller, "auditLogger", auditLoggerMock, PatientAccessAuditLogger.class);
+        ReflectionTestUtils.setField(controller, "auditLogInfoContainerFactory", containerFactoryMock,
+                AuditLogInfoContainerFactory.class);
         model = new ModelMap();
     }
 
@@ -62,7 +86,7 @@ public class PafWebViewerControllerTest {
         String result = controller.view(model);
 
         // Test create patient - PatientEvent if not present
-        assertEquals(PafWebViewerController.VIEW_JSP , result);
+        assertEquals(PafWebViewerController.VIEW_JSP, result);
         Object patientObj = model.get("patient");
 
         assertNotNull(patientObj);
@@ -137,6 +161,9 @@ public class PafWebViewerControllerTest {
         assertTrue(model.containsKey("jump"));
         final String jumpoutUrl = model.get("jumpout").toString();
         assertFalse(jumpoutUrl.contains("&MODE="));
+
+        verify(containerFactoryMock).getAuditLogInfoContainer(anyString(), any(PortletRequest.class));
+        verify(auditLoggerMock).logRequestParametersInAuditLog(any(AuditLogInfoContainer.class));
     }
 
     @Test
@@ -161,6 +188,9 @@ public class PafWebViewerControllerTest {
 
         jumpoutUrl = model.get("jumpout").toString();
         assertFalse(jumpoutUrl.contains("&MODE="));
+
+        verify(containerFactoryMock, times(2)).getAuditLogInfoContainer(anyString(), any(PortletRequest.class));
+        verify(auditLoggerMock, times(2)).logRequestParametersInAuditLog(any(AuditLogInfoContainer.class));
     }
 
     @Test
@@ -186,6 +216,9 @@ public class PafWebViewerControllerTest {
 
         assertFalse(model.containsKey("jumpout"));
         assertTrue(model.containsKey("jump"));
+
+        verify(containerFactoryMock).getAuditLogInfoContainer(anyString(), any(PortletRequest.class));
+        verify(auditLoggerMock).logRequestParametersInAuditLog(any(AuditLogInfoContainer.class));
     }
 
     @Test
@@ -203,6 +236,9 @@ public class PafWebViewerControllerTest {
         controller.jumpout(mockReq, model);
 
         assertTrue(model.containsKey("mode"));
+
+        verify(containerFactoryMock).getAuditLogInfoContainer(anyString(), any(PortletRequest.class));
+        verify(auditLoggerMock).logRequestParametersInAuditLog(any(AuditLogInfoContainer.class));
     }
 
     @Test
@@ -211,7 +247,7 @@ public class PafWebViewerControllerTest {
         Event mockEvent = new MockEvent("{http://vgregion.se/patientcontext/events}pctx.change", pEvent);
         EventRequest mockReq = new MockEventRequest(mockEvent);
         EventResponse mockRes = new MockEventResponse();
-        
+
         controller.changeListner(mockReq, mockRes, model);
         assertSame(model.get("patient"), pEvent);
         assertEquals("jumpout", mockRes.getRenderParameterMap().get("render")[0]);
@@ -247,7 +283,7 @@ public class PafWebViewerControllerTest {
         model.addAttribute("patient", pEvent);
 
         controller.resetListner(model);
-        PatientEvent pModel = (PatientEvent)model.get("patient");
+        PatientEvent pModel = (PatientEvent) model.get("patient");
         assertNotSame(pEvent, pModel);
 
         assertEquals("", pModel.getInputText());
