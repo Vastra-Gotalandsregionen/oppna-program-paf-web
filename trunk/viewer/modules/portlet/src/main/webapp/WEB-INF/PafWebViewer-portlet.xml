@@ -29,11 +29,12 @@
                            http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
   <import resource="classpath*:applicationContext.xml" />
+  <import resource="classpath*:services-config.xml" />
 
   <context:annotation-config />
+  
   <context:component-scan base-package="se.vgregion.portal.pafweb" />
-  <!-- context:load-time-weaver aspectj-weaving="on" /-->
-
+  
   <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
     <property name="prefix" value="/WEB-INF/jsp/viewer/" />

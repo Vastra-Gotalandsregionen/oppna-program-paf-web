@@ -28,7 +28,11 @@
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context.xsd">
   <context:annotation-config/>
-
+  
   <context:property-placeholder location="classpath:security.properties" ignore-resource-not-found="true"/>
+
+  <bean id="auditLogger" class="se.vgregion.portal.auditlog.PatientAccessAuditLogger" >
+      <constructor-arg value="se.vgregion.portal.paf-audit" />
+  </bean>
 
 </beans>

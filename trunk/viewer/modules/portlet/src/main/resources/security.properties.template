@@ -12,3 +12,9 @@ paf.access.security.level=secure
 paf.mode=
 #paf.access.security.level=insecure
 #paf.mode=123456789
+
+# Ldap properties
+BIND_DN=
+BIND_URL=
+BIND_PW=
+BASE=

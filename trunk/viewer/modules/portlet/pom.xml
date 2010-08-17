@@ -18,28 +18,19 @@ Generation time : 2010-05-12 09:42:11 CEST
   <packaging>war</packaging>
   <name>${project.artifactId}</name>
 
-  <build>
-    <finalName>${project.artifactId}</finalName>
-    <plugins>
-      <plugin>
-        <!-- Configure eclipse plug-in to generate a context root that does not have the version number on it -->
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-eclipse-plugin</artifactId>
-        <configuration>
-          <wtpContextName>${project.artifactId}</wtpContextName>
-        </configuration>
-      </plugin>
-      
-    </plugins>
-  </build>
-
   <dependencies>
     <dependency>
       <groupId>se.vgregion.healthcare-context</groupId>
+      <artifactId>healthcare-context-patient-context-composite-svc</artifactId>
+      <version>1.4-SNAPSHOT</version>
+    </dependency>
+    <dependency>
+      <groupId>se.vgregion.healthcare-context</groupId>
       <artifactId>healthcare-context-patient-context-composite-webcomp</artifactId>
-      <version>1.1</version>
+      <version>1.4-SNAPSHOT</version>
       <scope>provided</scope>
     </dependency>
+    
     <dependency>
       <groupId>javax.portlet</groupId>
       <artifactId>portlet-api</artifactId>
@@ -102,6 +93,16 @@ Generation time : 2010-05-12 09:42:11 CEST
     <dependency>
       <groupId>javax.servlet</groupId>
       <artifactId>servlet-api</artifactId>
+    </dependency>
+    
+    <!-- Test dependencies -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
     </dependency>
   </dependencies>
 </project>
