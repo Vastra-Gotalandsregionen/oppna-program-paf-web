@@ -19,20 +19,6 @@
 
 package se.vgregion.portal.pafweb;
 
-import static javax.portlet.PortletRequest.P3PUserInfos.*;
-import static org.junit.Assert.*;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
-
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.portlet.Event;
-import javax.portlet.EventRequest;
-import javax.portlet.EventResponse;
-import javax.portlet.PortletRequest;
-import javax.portlet.RenderRequest;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,11 +30,22 @@ import org.springframework.mock.web.portlet.MockEventResponse;
 import org.springframework.mock.web.portlet.MockRenderRequest;
 import org.springframework.test.util.ReflectionTestUtils;
 import org.springframework.ui.ModelMap;
-
 import se.vgregion.portal.auditlog.AuditLogInfoContainer;
 import se.vgregion.portal.auditlog.AuditLogInfoContainerFactory;
 import se.vgregion.portal.auditlog.PatientAccessAuditLogger;
 import se.vgregion.portal.patient.event.PatientEvent;
+
+import javax.portlet.*;
+import java.util.HashMap;
+import java.util.Map;
+
+import static javax.portlet.PortletRequest.P3PUserInfos.USER_LOGIN_ID;
+import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static se.vgregion.portal.pafweb.PafWebViewerController.GROUP_CODE;
 
 /**
  * This action do that and that, if it has something special it is.
@@ -125,7 +122,7 @@ public class PafWebViewerControllerTest {
 
     @Test
     public void testJumpoutNoConfig() throws Exception {
-        model.addAttribute("patient", new PatientEvent("19531212-1212"));
+        model.addAttribute("patient", new PatientEvent("19531212-1212", GROUP_CODE));
 
         RenderRequest mockReq = new MockRenderRequest();
         Map<String, String> userInfo = new HashMap<String, String>();
@@ -140,7 +137,7 @@ public class PafWebViewerControllerTest {
     @Test
     public void testJumpoutGetSecure() throws Exception {
         controller.pafUrl = "";
-        model.addAttribute("patient", new PatientEvent("19531212-1212"));
+        model.addAttribute("patient", new PatientEvent("19531212-1212", GROUP_CODE));
 
         RenderRequest mockReq = new MockRenderRequest();
         Map<String, String> userInfo = new HashMap<String, String>();
@@ -170,7 +167,7 @@ public class PafWebViewerControllerTest {
     public void testJumpoutGetInsecure() throws Exception {
         controller.pafUrl = "";
         controller.pafAccessSecurityLevel = "insecure";
-        model.addAttribute("patient", new PatientEvent("19531212-1212"));
+        model.addAttribute("patient", new PatientEvent("19531212-1212", GROUP_CODE));
 
         RenderRequest mockReq = new MockRenderRequest();
         Map<String, String> userInfo = new HashMap<String, String>();
@@ -197,7 +194,7 @@ public class PafWebViewerControllerTest {
     public void testJumpoutPostSecure() throws Exception {
         controller.pafUrl = "";
         controller.pafAccessMode = "post";
-        model.addAttribute("patient", new PatientEvent("19531212-1212"));
+        model.addAttribute("patient", new PatientEvent("19531212-1212", GROUP_CODE));
 
         RenderRequest mockReq = new MockRenderRequest();
         Map<String, String> userInfo = new HashMap<String, String>();
@@ -226,7 +223,7 @@ public class PafWebViewerControllerTest {
         controller.pafUrl = "";
         controller.pafAccessMode = "post";
         controller.pafAccessSecurityLevel = "insecure";
-        model.addAttribute("patient", new PatientEvent("19531212-1212"));
+        model.addAttribute("patient", new PatientEvent("19531212-1212", GROUP_CODE));
 
         RenderRequest mockReq = new MockRenderRequest();
         Map<String, String> userInfo = new HashMap<String, String>();
@@ -243,7 +240,7 @@ public class PafWebViewerControllerTest {
 
     @Test
     public void testChangeListnerValidPatient() throws Exception {
-        PatientEvent pEvent = new PatientEvent("19121212-1212");
+        PatientEvent pEvent = new PatientEvent("19121212-1212", GROUP_CODE);
         Event mockEvent = new MockEvent("{http://vgregion.se/patientcontext/events}pctx.change", pEvent);
         EventRequest mockReq = new MockEventRequest(mockEvent);
         EventResponse mockRes = new MockEventResponse();
@@ -255,7 +252,7 @@ public class PafWebViewerControllerTest {
 
     @Test
     public void testChangeListnerNoPatient() throws Exception {
-        PatientEvent pEvent = new PatientEvent("");
+        PatientEvent pEvent = new PatientEvent("", GROUP_CODE);
         Event mockEvent = new MockEvent("{http://vgregion.se/patientcontext/events}pctx.change", pEvent);
         EventRequest mockReq = new MockEventRequest(mockEvent);
         EventResponse mockRes = new MockEventResponse();
@@ -267,7 +264,7 @@ public class PafWebViewerControllerTest {
 
     @Test
     public void testChangeListnerInvalidPatient() throws Exception {
-        PatientEvent pEvent = new PatientEvent("19121212-1212a");
+        PatientEvent pEvent = new PatientEvent("19121212-1212a", GROUP_CODE);
         Event mockEvent = new MockEvent("{http://vgregion.se/patientcontext/events}pctx.change", pEvent);
         EventRequest mockReq = new MockEventRequest(mockEvent);
         EventResponse mockRes = new MockEventResponse();
@@ -279,7 +276,7 @@ public class PafWebViewerControllerTest {
 
     @Test
     public void testResetListner() throws Exception {
-        PatientEvent pEvent = new PatientEvent("19121212-1212a");
+        PatientEvent pEvent = new PatientEvent("19121212-1212a", GROUP_CODE);
         model.addAttribute("patient", pEvent);
 
         controller.resetListner(model);
