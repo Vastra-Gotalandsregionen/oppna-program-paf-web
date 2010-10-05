@@ -19,14 +19,6 @@
 
 package se.vgregion.portal.pafweb;
 
-import java.util.Map;
-
-import javax.portlet.Event;
-import javax.portlet.EventRequest;
-import javax.portlet.EventResponse;
-import javax.portlet.PortletRequest;
-import javax.portlet.RenderRequest;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +29,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.portlet.bind.annotation.EventMapping;
 import org.springframework.web.portlet.bind.annotation.RenderMapping;
-
 import se.vgregion.portal.auditlog.AuditLogInfoContainer;
 import se.vgregion.portal.auditlog.AuditLogInfoContainerFactory;
 import se.vgregion.portal.auditlog.PatientAccessAuditLogger;
 import se.vgregion.portal.patient.event.PatientEvent;
 import se.vgregion.portal.patient.event.PersonNummer;
+
+import javax.portlet.*;
+import java.util.Map;
 
 /**
  * This action do that and that, if it has something special it is.
@@ -56,10 +50,13 @@ import se.vgregion.portal.patient.event.PersonNummer;
 public class PafWebViewerController {
     private static final Logger LOGGER = LoggerFactory.getLogger(PafWebViewerController.class);
 
+    static final String GROUP_CODE = "PafWeb";
+
     /**
      * jsp name.
      */
     public static final String VIEW_JSP = "view";
+
     /**
      * jsp name.
      */
@@ -92,11 +89,23 @@ public class PafWebViewerController {
      */
     @RenderMapping
     public String view(ModelMap model) {
+        groupCodeFiltering(model);
+
         if (!model.containsKey("patient")) {
-            model.addAttribute("patient", new PatientEvent(""));
+            model.addAttribute("patient", new PatientEvent("", GROUP_CODE));
         }
 
+
+
         return VIEW_JSP;
+    }
+
+    private void groupCodeFiltering(ModelMap model) {
+        PatientEvent patient = (PatientEvent)model.get("patient");
+
+        if (patient != null && !patient.getGroupCode().equals(GROUP_CODE)) {
+            model.remove("patient");
+        }
     }
 
     /**
@@ -110,6 +119,8 @@ public class PafWebViewerController {
      */
     @RenderMapping(params = "render=jumpout")
     public String jumpout(RenderRequest request, ModelMap model) {
+        groupCodeFiltering(model);
+
         PatientEvent patient = (PatientEvent) model.get("patient");
         String uid = lookupUid(request);
         // Validation
@@ -173,6 +184,7 @@ public class PafWebViewerController {
         PatientEvent patient = (PatientEvent) event.getValue();
 
         model.addAttribute("patient", patient);
+        groupCodeFiltering(model);
         if (patient.getPersonNummer() != null && patient.getPersonNummer().getType() != PersonNummer.Type.INVALID) {
             response.setRenderParameter("render", "jumpout");
         }
@@ -186,7 +198,7 @@ public class PafWebViewerController {
      */
     @EventMapping("{http://vgregion.se/patientcontext/events}pctx.reset")
     public void resetListner(ModelMap model) {
-        model.addAttribute("patient", new PatientEvent(""));
+        model.addAttribute("patient", new PatientEvent("", GROUP_CODE));
     }
 
     private String lookupUid(PortletRequest req) {
