@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!--
+
+    Copyright 2010 Västra Götalandsregionen
+
+      This library is free software; you can redistribute it and/or modify
+      it under the terms of version 2.1 of the GNU Lesser General Public
+      License as published by the Free Software Foundation.
+
+      This library is distributed in the hope that it will be useful,
+      but WITHOUT ANY WARRANTY; without even the implied warranty of
+      MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+      GNU Lesser General Public License for more details.
+
+      You should have received a copy of the GNU Lesser General Public
+      License along with this library; if not, write to the
+      Free Software Foundation, Inc., 59 Temple Place, Suite 330,
+      Boston, MA 02111-1307  USA
+
+
+-->
+
+<portlet-app xmlns="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd" version="2.0"
+             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+             xsi:schemaLocation="http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd http://java.sun.com/xml/ns/portlet/portlet-app_2_0.xsd"
+             id="paf-web-viewer-module-portlet">
+  <portlet>
+    <portlet-name>PafWebViewer</portlet-name>
+    <display-name>PafWeb Viewer</display-name>
+    <portlet-class>org.springframework.web.portlet.DispatcherPortlet</portlet-class>
+    <expiration-cache>0</expiration-cache>
+    <supports>
+      <mime-type>text/html</mime-type>
+      <portlet-mode>view</portlet-mode>
+    </supports>
+    <supported-locale>sv</supported-locale>
+
+    <portlet-info>
+      <title>PafWeb Viewer</title>
+      <short-title>PafWeb</short-title>
+      <keywords>PafWeb</keywords>
+    </portlet-info>
+
+    <supported-processing-event>
+      <qname xmlns:x="http://vgregion.se/patientcontext/events">x:pctx.change</qname>
+    </supported-processing-event>
+    <supported-processing-event>
+      <qname xmlns:x="http://vgregion.se/patientcontext/events">x:pctx.reset</qname>
+    </supported-processing-event>
+  </portlet>
+
+  <!-- Used to get remote user. See more info in JSR-286 Section 21.1. -->
+  <user-attribute>
+    <description>User Login Id</description>
+    <name>user.login.id</name>
+  </user-attribute>
+
+  <default-namespace>http://PatientContext/</default-namespace>
+
+  <event-definition>
+    <qname xmlns:x="http://vgregion.se/patientcontext/events">x:pctx.change</qname>
+    <value-type>se.vgregion.portal.patient.event.PatientEvent</value-type>
+  </event-definition>
+
+  <event-definition>
+    <qname xmlns:x="http://vgregion.se/patientcontext/events">x:pctx.reset</qname>
+    <value-type>se.vgregion.portal.patient.event.PatientEvent</value-type>
+  </event-definition>
+
+</portlet-app>        
