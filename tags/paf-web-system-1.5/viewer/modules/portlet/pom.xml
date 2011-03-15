@@ -1,0 +1,108 @@
+<?xml version="1.0"?>
+<!--
+This is the Web-app Maven POM.
+
+
+Template version: 1.5-SNAPSHOT
+Generation time : 2010-05-12 09:42:11 CEST
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>se.vgregion.paf-web</groupId>
+    <artifactId>paf-web-viewer</artifactId>
+    <version>1.5</version>
+  </parent>
+  <groupId>se.vgregion.paf-web</groupId>
+  <artifactId>paf-web-viewer-module-portlet</artifactId>
+  <packaging>war</packaging>
+  <name>${project.artifactId}</name>
+
+  <dependencies>
+    <dependency>
+      <groupId>se.vgregion.healthcare-context</groupId>
+      <artifactId>healthcare-context-patient-context-composite-svc</artifactId>
+      <version>1.10</version>
+    </dependency>
+    <dependency>
+      <groupId>se.vgregion.healthcare-context</groupId>
+      <artifactId>healthcare-context-patient-context-composite-webcomp</artifactId>
+      <version>1.10</version>
+      <scope>provided</scope>
+    </dependency>
+    
+    <dependency>
+      <groupId>javax.portlet</groupId>
+      <artifactId>portlet-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.portal</groupId>
+      <artifactId>portlet-container</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>se.vgregion.javg</groupId>
+      <artifactId>javg-rt-support</artifactId>
+      <version>${javg.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>taglibs</groupId>
+      <artifactId>standard</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>jstl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-core</artifactId>
+    </dependency>
+    <!--
+      We use a Servlet Filter from spring-web to control UTF-8 encodings.
+      Facelets doesn't do this for us.
+    -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-web</artifactId>
+    </dependency>
+    <dependency>
+      <!-- required by the Spring-JS resource-loading servlet -->
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-webmvc-portlet</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-context-support</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-aspects</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.aspectj</groupId>
+      <artifactId>aspectjweaver</artifactId>
+    </dependency>
+    
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+    </dependency>
+    
+    <!-- Test dependencies -->
+    <dependency>
+      <groupId>org.springframework</groupId>
+      <artifactId>spring-test</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+    </dependency>
+  </dependencies>
+</project>
