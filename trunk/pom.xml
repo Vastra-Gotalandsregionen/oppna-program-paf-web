@@ -15,7 +15,7 @@
   <groupId>se.vgregion.paf-web</groupId>
   <artifactId>paf-web-system</artifactId>
   <packaging>pom</packaging>
-  <version>1.5-SNAPSHOT</version>
+  <version>1.5</version>
   <name>${project.artifactId}</name>
 
   <modules>
@@ -25,8 +25,8 @@
   <!--NB! SCM config below assumes system name equals VGR subversion/googlecode project name! -->
   <!-- Open Source repo -->
   <scm>
-    <developerConnection>scm:svn:https://oppna-program-paf-web.googlecode.com/svn/trunk/</developerConnection>
-    <url>http://oppna-program-paf-web.googlecode.com/svn/trunk</url>
+    <developerConnection>scm:svn:https://oppna-program-paf-web.googlecode.com/svn/tags/paf-web-system-1.5</developerConnection>
+    <url>http://oppna-program-paf-web.googlecode.com/svn/tags/paf-web-system-1.5</url>
   </scm>
 
 </project>
