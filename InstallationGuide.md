@@ -1,0 +1,18 @@
+# PafWeb client portlet is a simple tool that allows easy access to the PafWeb web-application in a portal environment.
+
+# PafWeb client #
+
+## Introduction ##
+
+PafWeb client portlet is a simple tool that allows easy access to the PafWeb web-application in a portal environment.
+PafWeb client depends on the "Patient context" portlet for initiating search and handling a common patient context throughout the portal. PafWeb client cannot run standalone, security considerations demands that it is governed by the "Patient context".
+
+
+## Portlet deployment ##
+PafWeb client is a normal portlet.
+However, it is governed by portlet event from the "Patient context" portlet. These event object classes has to be deployed separately, and are marked as provided in the Maven build.
+
+  * Verify that the [Patient context portlet](http://code.google.com/p/oppna-program-healthcare-context/wiki/PatientContextInstallationGuide?ts=1274800546&updated=PatientContextInstallationGuide) is installed and working.
+  * Navigate to the portlet war file `viewer/modules/portlet`
+  * Copy `paf-web-viewer-module-portlet.war` to `<liferay_home>/deploy`
+  * Verify that `WEB-INF/classes/security.properties` are correctly configured.
